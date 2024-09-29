@@ -12,6 +12,8 @@ import com.example.elitewear_mobile.R
 class CartActivity : AppCompatActivity() {
     private lateinit var cartListView: ListView
     private lateinit var totalPriceTextView: TextView
+    private val cartItems = mutableListOf<CartItem>()
+    private lateinit var cartAdapter: CartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,11 +22,17 @@ class CartActivity : AppCompatActivity() {
         cartListView = findViewById(R.id.cartListView)
         totalPriceTextView = findViewById(R.id.totalPriceTextView)
 
+        cartAdapter = CartAdapter(this, cartItems)
+        cartListView.adapter = cartAdapter
+
         // Fetch and load cart items from API
-        ApiClient.fetchCartItems { cartItems, totalPrice ->
-            totalPriceTextView.text = "Total Price: $$totalPrice"
-            val adapter = CartAdapter(this, cartItems)
-            cartListView.adapter = adapter
+        ApiClient.fetchCartItems { fetchedCartItems, totalPrice ->
+            runOnUiThread {
+                cartItems.clear()
+                cartItems.addAll(fetchedCartItems)
+                cartAdapter.notifyDataSetChanged()
+                totalPriceTextView.text = "Total Price: $$totalPrice"
+            }
         }
     }
 }
