@@ -5,6 +5,12 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/itemName"
         android:layout_width="wrap_content"
@@ -19,10 +25,35 @@
         android:text="Price"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/itemQuantity"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quantity"
-        android:textSize="16sp" />
+        android:orientation="horizontal">
+
+        <!-- Decrement Button -->
+        <Button
+            android:id="@+id/decrementButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=" - "
+            android:textSize="16sp"/>
+
+
+        <!-- Quantity Display -->
+        <TextView
+            android:id="@+id/quantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="1"
+            android:textSize="16sp" />
+
+        <!-- Increment Button -->
+        <Button
+            android:id="@+id/incrementButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=" + "
+            android:textSize="16sp"/>
+    </LinearLayout>
 </LinearLayout>
