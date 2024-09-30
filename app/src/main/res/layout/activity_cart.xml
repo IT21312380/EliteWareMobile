@@ -2,21 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Total Price -->
     <TextView
         android:id="@+id/totalPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Price: "
         android:textSize="18sp"
-        android:layout_margin="16dp" />
+        android:layout_marginBottom="16dp" />
 
+    <!-- List of Cart Items -->
     <ListView
         android:id="@+id/cartListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
+    <!-- Checkout Button -->
     <Button
         android:id="@+id/checkoutButton"
         android:layout_width="wrap_content"

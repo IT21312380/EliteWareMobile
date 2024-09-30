@@ -38,12 +38,17 @@ object ApiClient {
                     // Iterate through each item in the cart
                     for (j in 0 until itemsArray.length()) {
                         val jsonItem = itemsArray.getJSONObject(j)
+                        val id =jsonItem.getInt("id")
                         val name = jsonItem.getString("name")
                         val price = jsonItem.getDouble("price")
                         val quantity = jsonItem.getInt("quantity")
+                        var imageURL = jsonItem.optString("imageURL", "")
+                        if (imageURL.isNotEmpty()) {
+                            imageURL = imageURL.replace("localhost", "10.0.2.2")
+                        }
 
-                        // Add each item to the cartItems list
-                        cartItems.add(CartItem(name, price, quantity))
+                        cartItems.add(CartItem(id,name,imageURL, price, quantity))
+                        println("image from API: $cartItems")
                         totalPrice += price * quantity
                     }
                 }
@@ -85,7 +90,7 @@ object ApiClient {
 
                         // Get the image URL and replace 'localhost' with '10.0.2.2'
                         var imageUrl = jsonProduct.optString("imageUrl", null)
-                        imageUrl = imageUrl?.replace("localhost", "10.0.2.2") // Add the product to the list
+                        imageUrl = imageUrl?.replace("localhost", "10.0.2.2")
                         products.add(Product(id, name, description, price, category, quantity, vendorId, imageUrl))
                     }
 
@@ -98,16 +103,28 @@ object ApiClient {
         })
     }
     fun addToCart(cartData: Map<String, Any>, callback: (Boolean) -> Unit) {
-        val url = "http://10.0.2.2:5133/api/cart"
+        // Assuming your cart ID is included in the cartData map
+        val cartId = cartData["id"] as? Int ?: return callback(false) // Ensure cart ID is available
+        val url = "http://10.0.2.2:5133/api/cart/$cartId" // Endpoint for updating cart
+
+        // Determine whether to update or create a new cart
+        val requestMethod = if (cartId == 12) "PUT" else "POST" // Change condition based on your logic
         val jsonBody = JSONObject(cartData).toString()
         val requestBody = jsonBody.toRequestBody("application/json".toMediaTypeOrNull())
 
-        val request = Request.Builder()
+        val requestBuilder = Request.Builder()
             .url(url)
-            .post(requestBody)
             .addHeader("accept", "*/*")
             .addHeader("Content-Type", "application/json")
-            .build()
+
+        // Use PUT for updating, POST for creating
+        if (requestMethod == "PUT") {
+            requestBuilder.put(requestBody) // Use PUT to update existing cart
+        } else {
+            requestBuilder.post(requestBody) // Use POST to create a new cart
+        }
+
+        val request = requestBuilder.build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -136,4 +153,5 @@ object ApiClient {
             }
         })
     }
+
 }
