@@ -2,6 +2,7 @@ package com.example.elitewear_mobile.Network
 
 
 import com.example.elitewear_mobile.models.CartItem
+import com.example.elitewear_mobile.models.Payment
 import com.example.elitewear_mobile.models.Product
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -178,5 +179,64 @@ object ApiClient {
             }
         })
     }
+    fun addPayment(payment: Payment, callback: (Boolean) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/payment"
+        val jsonBody = JSONObject()
+            .put("cardType", payment.cardType)
+            .put("amount", payment.amount)
+            .put("billingAddress", payment.billingAddress)
+            .put("expireDate", payment.expireDate)
+            .toString()
+        val requestBody = jsonBody.toRequestBody("application/json".toMediaTypeOrNull())
+        val responseString = requestBody// Read response body
+        println("order req API : $responseString")
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                callback(false)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                callback(response.isSuccessful)
+            }
+        })
+    }
+    fun createOrder(orderData: Map<String, Any>, callback: (Boolean) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/order"  // Adjust the URL based on your localhost setup
+
+        val jsonBody = JSONObject(orderData).toString()
+        val requestBody = jsonBody.toRequestBody("application/json".toMediaTypeOrNull())
+
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .addHeader("Content-Type", "application/json")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                callback(false) // Indicate failure
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+
+                if (response.isSuccessful) {
+                    println("Order created successfully.")
+                    callback(true) // Indicate success
+                } else {
+                    println("Failed to create order: ${response.code} - ${response.message}")
+                    callback(false) // Indicate failure
+                }
+            }
+        })
+    }
+
+
 
 }

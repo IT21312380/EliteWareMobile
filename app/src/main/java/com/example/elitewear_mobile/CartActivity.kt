@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ListView
@@ -26,6 +27,8 @@ class CartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
+
+
         // Initialize views
         cartListView = findViewById(R.id.cartListView)
         totalPriceTextView = findViewById(R.id.totalPriceTextView)
@@ -50,12 +53,18 @@ class CartActivity : AppCompatActivity() {
 
         // Set up checkout button logic
         checkoutButton.setOnClickListener {
-            // Handle checkout logic (e.g., API call to proceed with checkout)
+            cartAdapter.createOrderAfterPayment(true)
+            val totalPrice = globalCartItems.sumOf { it.price * it.quantity }
+            val intent = Intent(this, PaymentActivity::class.java).apply {
+                putExtra("TOTAL_PRICE", totalPrice) // Pass the total price
+            }
+            startActivity(intent)
         }
 
         // Update total price when activity starts
         updateTotalPrice()
     }
+
 
     // Function to calculate the total price
     private fun updateTotalPrice() {
