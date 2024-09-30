@@ -153,5 +153,30 @@ object ApiClient {
             }
         })
     }
+    fun removeCartItem(cartId: Int, itemId: Int, callback: (Boolean) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/cart/$cartId/items/$itemId"  // Update with correct localhost IP
+
+        // Create a DELETE request
+        val request = Request.Builder()
+            .url(url)
+            .delete()
+            .build()
+
+        // Make the API call
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                callback(false) // Return failure
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    callback(true) // Return success
+                } else {
+                    callback(false) // Return failure
+                }
+            }
+        })
+    }
 
 }
