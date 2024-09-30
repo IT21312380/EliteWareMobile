@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.elitewear_mobile.Adapters.CartAdapter
 import com.example.elitewear_mobile.models.CartItem
 import com.example.elitewear_mobile.Network.ApiClient
-import com.example.elitewear_mobile.R
+
 
 class CartActivity : AppCompatActivity() {
     private lateinit var cartListView: ListView
