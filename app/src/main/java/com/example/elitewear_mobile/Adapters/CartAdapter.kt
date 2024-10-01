@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile.Adapters
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +17,13 @@ import com.example.elitewear_mobile.R
 
 class CartAdapter(
     private val context: Context,
-    private val cartItems: MutableList<CartItem>,
+    private val cartItems: MutableList<CartItem> ,
     private val updateTotalPrice: () -> Unit // A callback to update total price in activity
 ) : BaseAdapter() {
 
     override fun getCount(): Int = cartItems.size
     override fun getItem(position: Int): Any = cartItems[position]
     override fun getItemId(position: Int): Long = position.toLong()
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.cart_item, parent, false)
 
@@ -115,5 +115,35 @@ class CartAdapter(
             }
         }
     }
+    fun createOrderAfterPayment(paymentSuccess: Boolean) {
+        // Prepare order data based on the cart items
+        val orderData = mapOf(
+
+            "userId" to 12,  // Replace with actual user ID if available
+            "items" to cartItems.map { cartItem ->
+                mapOf(
+                    "id" to cartItem.id,
+                    "name" to cartItem.name,
+                    "qty" to cartItem.quantity,
+                    "status" to "Initiated"  // Initial status is null
+                )
+            },
+            "totalPrice" to cartItems.sumOf { it.price * it.quantity },
+            "status" to "Initiated"  // Initial order status
+        )
+println(orderData)
+        // Make API call to create the order
+        ApiClient.createOrder(orderData) { success ->
+            // Ensure UI updates (like Toast) are done on the main thread
+            (context as? Activity)?.runOnUiThread {
+                if (success) {
+                    Toast.makeText(context, "Order created successfully!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "Failed to create order.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
 
 }
