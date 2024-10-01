@@ -16,7 +16,6 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var productListView: ListView
     private lateinit var productAdapter: ProductAdapter
     private val products = mutableListOf<Product>() // Store products for later use
-    private val cartItems = mutableListOf<CartItem>() // Store cart items
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,33 +52,34 @@ class ProductListActivity : AppCompatActivity() {
 
     // Function to add a product to the cart
     private fun addToCart(product: Product) {
-        // Check if the product already exists in the cart
-
-        val existingCartItem = cartItems.find { it.id == product.id }
+        // Use globalCartItems from CartActivity
+        val existingCartItem = CartActivity.globalCartItems.find { it.id == product.id }
 
         if (existingCartItem != null) {
             // Product is already in the cart, increment its quantity
             existingCartItem.quantity++
+            println("Updated quantity for ${existingCartItem.name} to ${existingCartItem.quantity}")
         } else {
             // Add a new product to the cart
             val newCartItem = CartItem(
-                id = product.id, // Ensure this is correct
+                id = product.id,
                 name = product.name,
                 imageURL = product.imageUrl,
                 price = product.price,
                 quantity = 1
             )
-            cartItems.add(newCartItem) // Corrected from cartItem to cartItems
+            CartActivity.globalCartItems.add(newCartItem)
+            println("Added new item to cart: ${newCartItem.name}")
         }
 
         // Debugging: Log the current cart items
-        println("Current cart items: $cartItems")
+        println("Current global cart items: ${CartActivity.globalCartItems}")
 
         // Prepare the cart data to be sent to the server
         val cartData = mapOf(
-            "id" to 12, // Unique cart ID (consider generating a new ID)
+            "id" to 12, // Unique cart ID
             "userId" to 0, // Replace with actual user ID if available
-            "items" to cartItems.map { cartItem ->
+            "items" to CartActivity.globalCartItems.map { cartItem ->
                 mapOf(
                     "id" to cartItem.id,
                     "name" to cartItem.name,
@@ -88,15 +88,14 @@ class ProductListActivity : AppCompatActivity() {
                     "quantity" to cartItem.quantity
                 )
             },
-            "totalPrice" to cartItems.sumOf { it.price * it.quantity }
+            "totalPrice" to CartActivity.globalCartItems.sumOf { it.price * it.quantity }
         )
 
         // Send cart data to the server
         ApiClient.addToCart(cartData) { success ->
             runOnUiThread {
                 if (success) {
-                    Toast.makeText(this, "${product.name} added to cart", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, "${product.name} added to cart", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Failed to add to cart", Toast.LENGTH_SHORT).show()
                 }
@@ -104,5 +103,3 @@ class ProductListActivity : AppCompatActivity() {
         }
     }
 }
-
-
