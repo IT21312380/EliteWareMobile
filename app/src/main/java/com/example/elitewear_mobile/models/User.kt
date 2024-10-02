@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile.models
 
+
 data class User (
     val username: String,
     val email: String,
