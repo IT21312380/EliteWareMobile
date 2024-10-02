@@ -70,7 +70,6 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-
     private fun deactivateUser(email: String) {
         val call = UserApiClient.authService.deactivateUser(email)
         call.enqueue(object : Callback<Void> {
