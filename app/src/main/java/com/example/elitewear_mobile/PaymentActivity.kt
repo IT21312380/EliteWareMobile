@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile
 
+import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -45,16 +46,17 @@ class PaymentActivity : AppCompatActivity() {
             ApiClient.addPayment(newPayment) { success ->
                 runOnUiThread {
                     if (success) {
+                        // Return success to CartActivity
                         Toast.makeText(this, "Payment added successfully", Toast.LENGTH_SHORT).show()
-                        CartActivity.globalCartItems.clear()
-
+                        setResult(Activity.RESULT_OK)
+                        finish() // Close PaymentActivity
                     } else {
+                        // Return failure to CartActivity
                         Toast.makeText(this, "Failed to add payment", Toast.LENGTH_SHORT).show()
-
+                        setResult(Activity.RESULT_CANCELED)
                     }
                 }
             }
         }
     }
-
 }
