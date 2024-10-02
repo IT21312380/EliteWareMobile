@@ -13,9 +13,9 @@ import java.io.IOException
 object ApiClient2 {
 
     private val client = OkHttpClient()
-    fun fetchReviews(callback: (List<Review>)-> Unit){
+    fun fetchReviews(vendorID: Int, callback: (List<Review>)-> Unit){
 
-        val url = "http://10.0.2.2:5133/api/review"
+        val url = "http://10.0.2.2:5133/api/review/vendor/$vendorID"
         val request = Request.Builder().url(url).build()
 
         client.newCall(request).enqueue(object : Callback {
