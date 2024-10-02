@@ -2,6 +2,8 @@ package com.example.elitewear_mobile.Network
 
 
 import com.example.elitewear_mobile.models.CartItem
+import com.example.elitewear_mobile.models.Order
+import com.example.elitewear_mobile.models.OrderItem
 import com.example.elitewear_mobile.models.Payment
 import com.example.elitewear_mobile.models.Product
 import okhttp3.*
@@ -236,6 +238,54 @@ object ApiClient {
             }
         })
     }
+    fun fetchOrdersByUserId(userId: Int, callback: (List<Order>) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/order/$userId"  // Specific userId for filtering orders
+
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                callback(emptyList()) // Return an empty list on failure
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.body?.let { responseBody ->
+                    val rawResponse = responseBody.string()
+                    println("Response from API: $rawResponse")
+                    val jsonResponse = JSONArray(rawResponse)
+                    val orders = mutableListOf<Order>()
+
+                    for (i in 0 until jsonResponse.length()) {
+                        val jsonOrder = jsonResponse.getJSONObject(i)
+                        val id = jsonOrder.getInt("id")
+                        val totalPrice = jsonOrder.getDouble("totalPrice")
+                        val status = jsonOrder.getString("status")
+
+                        val itemsArray = jsonOrder.getJSONArray("items")
+                        val orderItems = mutableListOf<OrderItem>()
+
+                        for (j in 0 until itemsArray.length()) {
+                            val jsonItem = itemsArray.getJSONObject(j)
+                            val itemId = jsonItem.getInt("id")
+                            val itemName = jsonItem.getString("name")
+                            val itemQty = jsonItem.getInt("qty")
+                            val itemStatus = jsonItem.getString("status")
+                            orderItems.add(OrderItem(itemId, itemName, itemQty, itemStatus))
+                        }
+
+                        orders.add(Order(id, userId, orderItems, totalPrice, status))
+                    }
+
+                    callback(orders)
+                } ?: run {
+                    println("Error: Response body is null.")
+                    callback(emptyList()) // Return an empty list if the response body is null
+                }
+            }
+        })
+    }
+
 
 
 

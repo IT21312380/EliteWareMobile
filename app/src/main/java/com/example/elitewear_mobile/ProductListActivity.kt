@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -17,6 +18,7 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var productAdapter: ProductAdapter
     private val products = mutableListOf<Product>() // Store products for later use
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
@@ -39,7 +41,11 @@ class ProductListActivity : AppCompatActivity() {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
-
+        val viewOrderButton = findViewById<Button>(R.id.viewOrderButton)
+        viewOrderButton.setOnClickListener {
+            val intent = Intent(this, OrdersActivity::class.java)
+            startActivity(intent)
+        }
         // Fetch products from the API
         ApiClient.fetchProducts { fetchedProducts ->
             runOnUiThread {
@@ -75,9 +81,12 @@ class ProductListActivity : AppCompatActivity() {
         // Debugging: Log the current cart items
         println("Current global cart items: ${CartActivity.globalCartItems}")
 
+        // Check if cart ID 12 exists
+        val cartId = 12 // Fixed cart ID
+
         // Prepare the cart data to be sent to the server
         val cartData = mapOf(
-            "id" to 12, // Unique cart ID
+            "id" to cartId, // Use cart ID 12
             "userId" to 0, // Replace with actual user ID if available
             "items" to CartActivity.globalCartItems.map { cartItem ->
                 mapOf(
