@@ -1,6 +1,8 @@
 package com.example.elitewear_mobile
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +17,7 @@ class Review : AppCompatActivity() {
     private lateinit var reviewListView : ListView
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var averageRatingTextView: TextView
+    private lateinit var addReviewButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,7 @@ class Review : AppCompatActivity() {
 
         reviewListView = findViewById(R.id.reviewListView)
         averageRatingTextView = findViewById(R.id.averageRatingTextView)
+        addReviewButton = findViewById(R.id.addReviewButton)
 
         val vendorId = 11
 
@@ -34,6 +38,12 @@ class Review : AppCompatActivity() {
                 val averageRating = reviews.map { it.rate }.average()
                 averageRatingTextView.text = "Average Rating: %.2f".format(averageRating)
             }
+        }
+
+        addReviewButton.setOnClickListener {
+            val intent = Intent(this, AddReviewActivity::class.java)
+            intent.putExtra("vendorId", vendorId)
+            startActivity(intent)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
