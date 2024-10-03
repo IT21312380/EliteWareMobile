@@ -3,35 +3,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F9F9F9"
+    android:gravity="center">
 
-    <EditText
-        android:id="@+id/cardTypeInput"
+    <!-- Header -->
+    <TextView
+        android:id="@+id/paymentHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FB7503"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Card Type Dropdown -->
+    <Spinner
+        android:id="@+id/cardTypeSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Card Type" />
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/spinner_background"
+        android:padding="12dp" />
 
+    <!-- Amount Input -->
     <EditText
         android:id="@+id/amountInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Amount" />
+        android:hint="Amount"
+        android:inputType="numberDecimal"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
 
+    <!-- Billing Address Input -->
     <EditText
         android:id="@+id/billingAddressInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Billing Address" />
+        android:hint="Billing Address"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
 
+    <!-- Expiry Date Input -->
     <EditText
         android:id="@+id/expireDateInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Expire Date" />
+        android:hint="Expiry Date (MM/YY)"
+        android:inputType="date"
+        android:background="@drawable/edittext_background"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp" />
 
+    <!-- Add Payment Button -->
     <Button
         android:id="@+id/addPaymentButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Payment" />
+        android:text="Add Payment"
+        android:backgroundTint="#FF6F00"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:padding="16dp" />
+
 </LinearLayout>
