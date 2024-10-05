@@ -61,6 +61,7 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
+
     private fun fetchUserProfile(email: String) {
         val call = UserApiClient.authService.fetchUserProfileByEmail(email)
         call.enqueue(object : Callback<User> {

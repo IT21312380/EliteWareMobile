@@ -22,6 +22,7 @@ object UserApiClient {
 
     val authService: AuthService = retrofit.create(AuthService::class.java)
 
+
     interface AuthService {
         @POST("/api/user/register")
         fun registerUser(@Body user: User): Call<Void>

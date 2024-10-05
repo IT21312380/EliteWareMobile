@@ -3,6 +3,7 @@ package com.example.elitewear_mobile.models
 data class UpdateUser (
 
 
+
     val id: String,
     val username: String,
     val email: String,
