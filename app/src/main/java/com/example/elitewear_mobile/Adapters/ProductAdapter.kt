@@ -4,7 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.elitewear_mobile.models.Product
 import com.example.elitewear_mobile.R
@@ -15,7 +18,9 @@ class ProductAdapter(
 ) : BaseAdapter() {
 
     override fun getCount(): Int = products.size
+
     override fun getItem(position: Int): Any = products[position]
+
     override fun getItemId(position: Int): Long = position.toLong()
 
     // Add an interface for handling button clicks
@@ -31,13 +36,19 @@ class ProductAdapter(
         val productName = view.findViewById<TextView>(R.id.productName)
         val productPrice = view.findViewById<TextView>(R.id.productPrice)
         val productImage = view.findViewById<ImageView>(R.id.productImage)
-        val addToCartButton = view.findViewById<Button>(R.id.addToCartButton) // Add a button in your layout
+        val addToCartButton = view.findViewById<Button>(R.id.addToCartButton)
 
+        // Get the product for the current position
         val product = products[position]
+
+        // Set the product details
         productName.text = product.name
         productPrice.text = "$${product.price}"
 
-        Glide.with(context).load(product.imageUrl).into(productImage)
+        // Load the product image using Glide
+        Glide.with(context)
+            .load(product.imageUrl)
+            .into(productImage)
 
         // Handle the Add to Cart button click
         addToCartButton.setOnClickListener {
