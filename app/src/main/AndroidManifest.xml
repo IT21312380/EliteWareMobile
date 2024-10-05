@@ -23,6 +23,7 @@
             android:name=".RequestedActivity"
             android:exported="false" />
         <activity
+
             android:name=".DeactivateActivity"
             android:exported="true" />
         <activity
@@ -37,6 +38,15 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
+
+
+            android:name=".PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Review"
+            android:exported="true" />
+
+
         <activity
             android:name=".ProductListActivity"
             android:exported="false" />

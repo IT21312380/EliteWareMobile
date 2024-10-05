@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ListView
@@ -8,26 +9,33 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.elitewear_mobile.Adapters.CartAdapter
 import com.example.elitewear_mobile.models.CartItem
 import com.example.elitewear_mobile.Network.ApiClient
-import com.example.elitewear_mobile.R
+
 
 class CartActivity : AppCompatActivity() {
     private lateinit var cartListView: ListView
     private lateinit var totalPriceTextView: TextView
     private lateinit var checkoutButton: Button
-    private val cartItems = mutableListOf<CartItem>()
+
+    // Static cart items to maintain across activities
+    companion object {
+        val globalCartItems = mutableListOf<CartItem>()
+    }
+
     private lateinit var cartAdapter: CartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
+
+
         // Initialize views
         cartListView = findViewById(R.id.cartListView)
         totalPriceTextView = findViewById(R.id.totalPriceTextView)
         checkoutButton = findViewById(R.id.checkoutButton)
 
-        // Initialize the adapter with a callback to update total price
-        cartAdapter = CartAdapter(this, cartItems) {
+        // Initialize the adapter with the global cart items
+        cartAdapter = CartAdapter(this, globalCartItems) {
             updateTotalPrice() // Callback for updating total price when quantity changes
         }
         cartListView.adapter = cartAdapter
@@ -35,8 +43,9 @@ class CartActivity : AppCompatActivity() {
         // Fetch and load cart items from API
         ApiClient.fetchCartItems { fetchedCartItems, totalPrice ->
             runOnUiThread {
-                cartItems.clear()
-                cartItems.addAll(fetchedCartItems)
+                // Clear and add fetched items to the global cart items
+                globalCartItems.clear()
+                globalCartItems.addAll(fetchedCartItems)
                 cartAdapter.notifyDataSetChanged()
                 totalPriceTextView.text = "Total Price: $${String.format("%.2f", totalPrice)}"
             }
@@ -44,16 +53,22 @@ class CartActivity : AppCompatActivity() {
 
         // Set up checkout button logic
         checkoutButton.setOnClickListener {
-            // Handle checkout logic (e.g., API call to proceed with checkout)
+            cartAdapter.createOrderAfterPayment(true)
+            val totalPrice = globalCartItems.sumOf { it.price * it.quantity }
+            val intent = Intent(this, PaymentActivity::class.java).apply {
+                putExtra("TOTAL_PRICE", totalPrice) // Pass the total price
+            }
+            startActivity(intent)
         }
+
+        // Update total price when activity starts
+        updateTotalPrice()
     }
+
 
     // Function to calculate the total price
     private fun updateTotalPrice() {
-        var totalPrice = 0.0
-        for (item in cartItems) {
-            totalPrice += item.price * item.quantity
-        }
+        val totalPrice = globalCartItems.sumOf { it.price * it.quantity }
         totalPriceTextView.text = "Total Price: $${String.format("%.2f", totalPrice)}"
     }
 }
