@@ -27,6 +27,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+
         emailTextView = findViewById(R.id.emailTextView)
         logoutButton = findViewById(R.id.logoutButton)
         deactivateButton = findViewById(R.id.deactivateButton)
