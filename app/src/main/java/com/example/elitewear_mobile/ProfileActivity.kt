@@ -15,22 +15,29 @@ import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var userEmail: String
+    private lateinit var username: String
     private lateinit var emailTextView: TextView
+    private lateinit var usernameTextView: TextView
     private lateinit var logoutButton: Button
     private lateinit var deactivateButton: Button
+    private lateinit var updateButton: Button
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+
         emailTextView = findViewById(R.id.emailTextView)
         logoutButton = findViewById(R.id.logoutButton)
-        deactivateButton = findViewById(R.id.detactivateButton)
+        deactivateButton = findViewById(R.id.deactivateButton)
+        usernameTextView = findViewById(R.id.usernameTextView)
+        updateButton = findViewById(R.id.updatebutton)
 
         // Fetch user email from SharedPreferences
         val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         userEmail = sharedPreferences.getString("userEmail", "") ?: ""
+        username = sharedPreferences.getString("username","") ?:""
 
         if (userEmail.isNotEmpty()) {
             fetchUserProfile(userEmail)
@@ -44,6 +51,12 @@ class ProfileActivity : AppCompatActivity() {
             deactivateUser(userEmail)
         }
 
+        updateButton.setOnClickListener {
+            val intent = Intent(this@ProfileActivity, UserUpdateActivity::class.java)
+            intent.putExtra("USER_EMAIL", userEmail) // Pass the email to the next activity
+            startActivity(intent)
+        }
+
 
 
     }
@@ -54,9 +67,13 @@ class ProfileActivity : AppCompatActivity() {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
                     val user = response.body()
+
                     user?.let {
                         emailTextView.text = it.email
+                        usernameTextView.text = it.username
                     }
+
+
                 } else {
                     Toast.makeText(this@ProfileActivity, "Failed to fetch user profile", Toast.LENGTH_SHORT).show()
                 }
@@ -99,6 +116,8 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile.network
 
+import com.example.elitewear_mobile.models.UpdateUser
 import com.example.elitewear_mobile.models.User
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -33,6 +34,20 @@ object UserApiClient {
 
         @PUT("/api/user/deactivate/{email}")
         fun deactivateUser(@Path("email") email: String): Call<Void>
+
+        @PUT("/api/user/requested/{email}")
+        fun reactivateUser(@Path("email") email: String): Call<Void>
+
+        @GET("/api/user/{email}")
+        fun fetchUserProfileByEmailforUpdate(@Path("email") email: String): Call<UpdateUser>
+
+        @PUT("/api/user/update/{email}")
+        fun updateUser(@Path("email") email: String, @Body updatedUser: UpdateUser): Call<Void>
+
+
+
+
+
 
     }
 }
