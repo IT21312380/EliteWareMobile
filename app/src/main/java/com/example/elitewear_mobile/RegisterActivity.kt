@@ -13,6 +13,7 @@ import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
+
     private lateinit var authService: UserApiClient.AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
