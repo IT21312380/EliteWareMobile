@@ -1,0 +1,57 @@
+package com.example.elitewear_mobile
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RatingBar
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.elitewear_mobile.Network.ApiClient2
+import com.example.elitewear_mobile.models.Review
+
+class AddReviewActivity : AppCompatActivity() {
+
+    private lateinit var nameEditText: EditText
+    private lateinit var descriptionEditText: EditText
+    private lateinit var ratingBar: RatingBar
+    private lateinit var submitButton: Button
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_add_review)
+
+        // Initialize the views
+        nameEditText = findViewById(R.id.nameEditText)
+        descriptionEditText = findViewById(R.id.descriptionEditText)
+        ratingBar = findViewById(R.id.ratingBar)
+        submitButton = findViewById(R.id.submitReviewButton)
+
+        val vendorId = intent.getIntExtra("vendorId", 11) // Pass vendorId to the intent
+
+        // Handle submit button click
+        submitButton.setOnClickListener {
+            val name = nameEditText.text.toString()
+            val description = descriptionEditText.text.toString()
+            val rating = ratingBar.rating.toInt()
+
+            val newReview = Review(0, vendorId, name, description, rating)
+
+            // Use ApiClient to submit the review (Create this API method in the client)
+            ApiClient2.addReview(newReview) {
+                // Once the review is successfully added, you can finish the activity
+                finish()
+            }
+        }
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+}
