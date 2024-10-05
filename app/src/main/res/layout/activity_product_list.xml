@@ -2,14 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Search Bar -->
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search products by name"
+        android:padding="10dp"
+        android:background="@drawable/rounded_search_background"
+    android:layout_marginBottom="16dp" />
 
-    <ListView
-        android:id="@+id/productListView"
+    <GridView
+        android:id="@+id/productGridView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:numColumns="2"
+        android:verticalSpacing="16dp"
+        android:horizontalSpacing="16dp"
+        android:stretchMode="columnWidth" />
 
     <!-- View Cart Button -->
     <Button
@@ -17,6 +31,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Cart"
+        android:layout_gravity="center"
+        android:layout_margin="16dp" />
+
+    <Button
+        android:id="@+id/viewOrderButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Order"
         android:layout_gravity="center"
         android:layout_margin="16dp" />
 </LinearLayout>
