@@ -27,8 +27,11 @@ class ProductAdapter(
     interface OnAddToCartClickListener {
         fun onAddToCartClick(product: Product)
     }
-
+    interface OnProductClickListener {
+        fun onProductClick(product: Product)
+    }
     var addToCartClickListener: OnAddToCartClickListener? = null
+    var productClickListener: OnProductClickListener? = null
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.product_item, parent, false)
@@ -54,7 +57,9 @@ class ProductAdapter(
         addToCartButton.setOnClickListener {
             addToCartClickListener?.onAddToCartClick(product)
         }
-
+        view.setOnClickListener {
+            productClickListener?.onProductClick(products[position])
+        }
         return view
     }
 }
