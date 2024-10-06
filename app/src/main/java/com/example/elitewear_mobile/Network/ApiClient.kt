@@ -86,21 +86,22 @@ object ApiClient {
                         val category = jsonProduct.getString("category")
                         val quantity = jsonProduct.getInt("quantity")
                         val vendorId = jsonProduct.getInt("vendorId")
-
-                        // Get the image URL and replace 'localhost' with '10.0.2.2'
+                        val status = jsonProduct.getString("status")  // Retrieve the status
                         var imageUrl = jsonProduct.optString("imageUrl", null)
                         imageUrl = imageUrl?.replace("localhost", "10.0.2.2")
-                        products.add(Product(id, name, description, price, category, quantity, vendorId, imageUrl))
+                        // Only include products with "Active" status
+                        if (status == "Active") {
+                            products.add(Product(id, name, description, price, category, quantity, vendorId, imageUrl))
+                        }
                     }
 
-                    // Pass the products to the callback (UI handling is done in the Activity)
+                    // Pass the active products to the callback (UI handling is done in the Activity)
                     callback(products)
                 }
             }
-
-
         })
     }
+
     fun addToCart(cartData: Map<String, Any>, callback: (Boolean) -> Unit) {
         // Check if the cart ID is provided
         val cartId = cartData["userId"] as? Int
@@ -328,6 +329,37 @@ object ApiClient {
 
             override fun onResponse(call: Call, response: Response) {
                 callback(response.isSuccessful) // Return success status
+            }
+        })
+    }
+    fun fetchProductById(url: String, callback: (Product) -> Unit) {
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.body?.let { responseBody ->
+                    val rawResponse = responseBody.string()
+                    println("Response from API: $rawResponse")
+                    val jsonProduct = JSONObject(rawResponse)
+
+                    val id = jsonProduct.getInt("id")
+                    val name = jsonProduct.getString("name")
+                    val description = jsonProduct.getString("description")
+                    val price = jsonProduct.getDouble("price")
+                    val category = jsonProduct.getString("category")
+                    val quantity = jsonProduct.getInt("quantity")
+                    val vendorId = jsonProduct.getInt("vendorId")
+                    //val imageUrl = jsonProduct.optString("imageUrl", null)?.replace("localhost", "10.0.2.2")
+                    var imageUrl = jsonProduct.optString("imageUrl", null)
+                    imageUrl = imageUrl?.replace("localhost", "10.0.2.2")
+
+                    val product = Product(id, name, description, price, category, quantity, vendorId, imageUrl)
+                    callback(product)
+                }
             }
         })
     }
