@@ -5,10 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
-import android.widget.EditText
-import android.widget.GridView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.elitewear_mobile.Adapters.ProductAdapter
 import com.example.elitewear_mobile.Network.ApiClient
@@ -21,6 +19,7 @@ class ProductListActivity : AppCompatActivity() {
     private lateinit var productAdapter: ProductAdapter
     private val products = mutableListOf<Product>() // Store products for later use
     private val filteredProducts = mutableListOf<Product>() // Store filtered products
+    private lateinit var categorySpinner: Spinner
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +28,7 @@ class ProductListActivity : AppCompatActivity() {
 
         val searchEditText = findViewById<EditText>(R.id.searchEditText)
         productGridView = findViewById(R.id.productGridView)
+        categorySpinner = findViewById(R.id.categorySpinner)
 
         // Initialize adapter with empty list for now
         productAdapter = ProductAdapter(this, filteredProducts)
@@ -53,6 +53,12 @@ class ProductListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Populate the category spinner with sample categories (you can replace this with actual categories from API)
+        val categories = listOf("All", "Computers","Computer Components","Peripherals & Accessories","Storage & Networking")
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = spinnerAdapter
+
         // Fetch products from the API
         ApiClient.fetchProducts { fetchedProducts ->
             runOnUiThread {
@@ -68,24 +74,34 @@ class ProductListActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                filterProducts(s.toString())
+                filterProducts(s.toString(), categorySpinner.selectedItem.toString())
             }
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        // Set up category filter functionality
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                filterProducts(searchEditText.text.toString(), categories[position])
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
-    private fun filterProducts(query: String) {
+    private fun filterProducts(query: String, category: String) {
         filteredProducts.clear()
-        if (query.isEmpty()) {
-            filteredProducts.addAll(products) // Show all products if query is empty
-        } else {
-            for (product in products) {
-                if (product.name.lowercase().contains(query.lowercase())) {
-                    filteredProducts.add(product)
-                }
+
+        for (product in products) {
+            val matchesSearch = product.name.lowercase().contains(query.lowercase())
+            val matchesCategory = (category == "All" || product.category == category)
+
+            if (matchesSearch && matchesCategory) {
+                filteredProducts.add(product)
             }
         }
+
         productAdapter.notifyDataSetChanged() // Notify adapter about data changes
     }
 

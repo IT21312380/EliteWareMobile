@@ -16,6 +16,7 @@ class CartActivity : AppCompatActivity() {
     private lateinit var cartListView: ListView
     private lateinit var totalPriceTextView: TextView
     private lateinit var checkoutButton: Button
+    private lateinit var backToProductsButton: Button
 
     // Static cart items to maintain across activities
     companion object {
@@ -51,6 +52,13 @@ class CartActivity : AppCompatActivity() {
         cartListView = findViewById(R.id.cartListView)
         totalPriceTextView = findViewById(R.id.totalPriceTextView)
         checkoutButton = findViewById(R.id.checkoutButton)
+        backToProductsButton = findViewById(R.id.backToProductsButton)  // Initialize the button
+
+        // Set up back to products button click listener
+        backToProductsButton.setOnClickListener {
+            val intent = Intent(this, ProductListActivity::class.java)  // Adjust the class name if different
+            startActivity(intent)  // Start the ProductListActivity
+        }
 
         // Initialize the adapter with the global cart items
         cartAdapter = CartAdapter(this, globalCartItems) {
@@ -58,7 +66,6 @@ class CartActivity : AppCompatActivity() {
         }
         cartListView.adapter = cartAdapter
         val cartId = 13
-
 
             // Fetch and load cart items from API for the specific cart
             ApiClient.fetchCartItems(cartId) { fetchedCartItems, totalPrice ->
