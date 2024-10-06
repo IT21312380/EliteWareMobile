@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -31,9 +32,9 @@ class CartAdapter(
         val itemName = view.findViewById<TextView>(R.id.itemName)
         val itemPrice = view.findViewById<TextView>(R.id.itemPrice)
         val quantityTextView = view.findViewById<TextView>(R.id.quantityTextView)
-        val incrementButton = view.findViewById<Button>(R.id.incrementButton)
-        val decrementButton = view.findViewById<Button>(R.id.decrementButton)
-        val deleteButton = view.findViewById<Button>(R.id.deleteButton)
+        val incrementButton = view.findViewById<ImageButton>(R.id.incrementButton)
+        val decrementButton = view.findViewById<ImageButton>(R.id.decrementButton)
+        val deleteButton = view.findViewById<ImageButton>(R.id.deleteButton)
         val cartItem = cartItems[position]
 
         // Set initial values
@@ -53,7 +54,7 @@ class CartAdapter(
             updateTotalPrice() // Update total price
         }
         deleteButton.setOnClickListener {
-            ApiClient.removeCartItem(12, cartItem.id) { success ->  // 12 is the cartId, cartItem.id is the itemId
+            ApiClient.removeCartItem(13, cartItem.id) { success ->  // 12 is the cartId, cartItem.id is the itemId
                 if (success) {
                     cartItems.removeAt(position) // Remove the item from the list
                     notifyDataSetChanged() // Refresh the list
@@ -90,8 +91,8 @@ class CartAdapter(
     private fun updateDatabase(cartItems: List<CartItem>) {
         // Prepare cart data structure
         val cartData = mapOf(
-            "id" to 12, // Unique cart ID (consider generating a new ID)
-            "userId" to 0, // Replace with actual user ID if available
+             // Unique cart ID (consider generating a new ID)
+            "userId" to 13, // Replace with actual user ID if available
             "items" to cartItems.map { cartItem ->
                 mapOf(
                     "id" to cartItem.id,
@@ -119,7 +120,7 @@ class CartAdapter(
         // Prepare order data based on the cart items
         val orderData = mapOf(
 
-            "userId" to 12,  // Replace with actual user ID if available
+            "userId" to 13,  // Replace with actual user ID if available
             "items" to cartItems.map { cartItem ->
                 mapOf(
                     "id" to cartItem.id,

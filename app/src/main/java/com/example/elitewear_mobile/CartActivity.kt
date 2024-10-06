@@ -57,9 +57,11 @@ class CartActivity : AppCompatActivity() {
             updateTotalPrice() // Callback for updating total price when quantity changes
         }
         cartListView.adapter = cartAdapter
+        val cartId = 13
 
-        // Fetch and load cart items from API
-        ApiClient.fetchCartItems { fetchedCartItems, totalPrice ->
+
+            // Fetch and load cart items from API for the specific cart
+            ApiClient.fetchCartItems(cartId) { fetchedCartItems, totalPrice ->
             runOnUiThread {
                 // Clear and add fetched items to the global cart items
                 globalCartItems.clear()

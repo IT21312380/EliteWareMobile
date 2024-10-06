@@ -1,12 +1,14 @@
 package com.example.elitewear_mobile.models
 
-data class User (
+data class UpdateUser (
 
+
+
+    val id: String,
     val username: String,
     val email: String,
-    val password: String,
+    val passwordHash: String,
     val state: String,
     val requested: String
-
 
 )
