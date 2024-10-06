@@ -53,6 +53,7 @@ class AddReviewActivity : AppCompatActivity() {
         val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
         val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
         val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
+        val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
 
         HomeButton.setOnClickListener {
             val intent = Intent(this, ProductListActivity::class.java)
@@ -70,6 +71,11 @@ class AddReviewActivity : AppCompatActivity() {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
+        NotifyPageButton.setOnClickListener {
+            val intent = Intent(this, NotificationsActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

@@ -62,6 +62,7 @@
 
         <ImageView
             android:id="@+id/navHomeUnClick"
+            android:layout_margin="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -70,6 +71,7 @@
 
         <ImageView
             android:id="@+id/navCartUnClick"
+            android:layout_margin="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -78,6 +80,7 @@
 
         <ImageView
             android:id="@+id/navReviewUnClick"
+            android:layout_margin="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -85,7 +88,17 @@
             app:srcCompat="@drawable/baseline_books2" />
 
         <ImageView
+            android:id="@+id/navNotifyUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_notifications" />
+
+        <ImageView
             android:id="@+id/navProfileUnClick"
+            android:layout_margin="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
