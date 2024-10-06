@@ -2,6 +2,7 @@ package com.example.elitewear_mobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,28 +12,28 @@ import com.example.elitewear_mobile.Network.ApiClient2
 
 class MyReviewsActivity : AppCompatActivity() {
 
-   // private lateinit var myReviewsListView: ListView
-    //private lateinit var myReviewsAdapter: ReviewAdapter
+    private lateinit var myReviewsListView: ListView
+    private lateinit var myReviewsAdapter: ReviewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_my_reviews)
 
-    /*    myReviewsListView = findViewById(R.id.myReviewsListView)
+        myReviewsListView = findViewById(R.id.myReviewsListView)
 
         // Get the logged-in user's name from SharedPreferences
         val sharedPref = getSharedPreferences("UserPrefs", MODE_PRIVATE)
         val userName = sharedPref.getString("userName", "") // Fetch stored userName
 
         // Fetch and filter reviews based on the logged-in user
-        ApiClient2.fetchReviews { reviews ->
+        /*ApiClient2.fetchReviews { reviews ->
             val myReviews = reviews.filter { it.name == userName }
             runOnUiThread {
                 myReviewsAdapter = ReviewAdapter(this, myReviews)
                 myReviewsListView.adapter = myReviewsAdapter
             }
-        }
+        }*/
 
         // Handle click events on reviews to edit
         myReviewsListView.setOnItemClickListener { _, _, position, _ ->
@@ -46,8 +47,8 @@ class MyReviewsActivity : AppCompatActivity() {
             intent.putExtra("rate", selectedReview.rate)
             startActivity(intent)
         }
-        
-     */
+
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
