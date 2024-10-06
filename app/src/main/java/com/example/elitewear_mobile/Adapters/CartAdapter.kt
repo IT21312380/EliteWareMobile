@@ -54,17 +54,20 @@ class CartAdapter(
             updateTotalPrice() // Update total price
         }
         deleteButton.setOnClickListener {
-            ApiClient.removeCartItem(13, cartItem.id) { success ->  // 12 is the cartId, cartItem.id is the itemId
-                if (success) {
-                    cartItems.removeAt(position) // Remove the item from the list
-                    notifyDataSetChanged() // Refresh the list
-                    updateTotalPrice() // Update the total price in the activity
-                    Toast.makeText(context, "Item removed from cart", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "Failed to remove item", Toast.LENGTH_SHORT).show()
+            ApiClient.removeCartItem(13, cartItem.id) { success ->  // 13 is the cartId, cartItem.id is the itemId
+                (context as? Activity)?.runOnUiThread {  // Ensure UI updates happen on the main thread
+                    if (success) {
+                        cartItems.removeAt(position) // Remove the item from the list
+                        notifyDataSetChanged() // Refresh the list
+                        updateTotalPrice() // Update the total price in the activity
+                        Toast.makeText(context, "Item removed from cart", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Failed to remove item", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
+
         // Decrement Button Logic
         decrementButton.setOnClickListener {
             if (cartItem.quantity > 1) {
