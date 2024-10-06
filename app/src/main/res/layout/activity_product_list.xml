@@ -52,6 +52,7 @@
             android:contentDescription="Decrement"
             android:src="@drawable/baseline_keyboard_arrow_down_24" />
     </LinearLayout>
+
     <GridView
         android:id="@+id/productGridView"
         android:layout_width="match_parent"
