@@ -41,17 +41,8 @@ class ProductListActivity : AppCompatActivity() {
             }
         }
 
-        val viewCartButton = findViewById<Button>(R.id.viewCartButton)
-        viewCartButton.setOnClickListener {
-            val intent = Intent(this, CartActivity::class.java)
-            startActivity(intent)
-        }
 
-        val viewOrderButton = findViewById<Button>(R.id.viewOrderButton)
-        viewOrderButton.setOnClickListener {
-            val intent = Intent(this, OrdersActivity::class.java)
-            startActivity(intent)
-        }
+
 
         // Populate the category spinner with sample categories (you can replace this with actual categories from API)
         val categories = listOf("All", "Computers","Computer Components","Peripherals & Accessories","Storage & Networking")
@@ -68,7 +59,14 @@ class ProductListActivity : AppCompatActivity() {
                 productAdapter.notifyDataSetChanged()
             }
         }
-
+        productAdapter.productClickListener = object : ProductAdapter.OnProductClickListener {
+            override fun onProductClick(product: Product) {
+                // Open Product Details page when a product is clicked
+                val intent = Intent(this@ProductListActivity, ProductDetailsActivity::class.java)
+                intent.putExtra("PRODUCT_ID", product.id)
+                startActivity(intent)
+            }
+        }
         // Set up search functionality
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -94,27 +92,39 @@ class ProductListActivity : AppCompatActivity() {
         val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
         val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
         val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
+        val OrderHistoryButton = findViewById<ImageView>(R.id.navOrderHistoryUnClick) // New Order History Button
 
         HomeButton.setOnClickListener {
             val intent = Intent(this, ProductListActivity::class.java)
             startActivity(intent)
         }
+
         ReviewPageButton.setOnClickListener {
             val intent = Intent(this, MyReviewsActivity::class.java)
             startActivity(intent)
         }
+
         ProfilePageButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
         CartPageButton.setOnClickListener {
             val intent = Intent(this, CartActivity::class.java)
             startActivity(intent)
         }
+
         NotifyPageButton.setOnClickListener {
             val intent = Intent(this, NotificationsActivity::class.java)
             startActivity(intent)
         }
+
+// New Order History Click Listener
+        OrderHistoryButton.setOnClickListener {
+            val intent = Intent(this, OrdersActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun filterProducts(query: String, category: String) {
