@@ -5,13 +5,9 @@
     android:background="#F5F5F5">
 
     <!-- Scrollable Content -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navBar"
-        android:padding="16dp">
 
         <LinearLayout
+            android:layout_margin="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -119,9 +115,18 @@
                     android:textSize="16sp"
                     android:textColor="#666666" />
             </LinearLayout>
+            <Button
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="15dp"
+                android:id="@+id/vendorRevBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Seller Reviews"
+                >
+            </Button>
         </LinearLayout>
 
-    </ScrollView>
+
 
     <!-- Navigation Bar at Bottom -->
     <LinearLayout
