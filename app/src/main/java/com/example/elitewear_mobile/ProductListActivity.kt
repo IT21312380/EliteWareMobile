@@ -2,6 +2,7 @@ package com.example.elitewear_mobile
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,6 +21,7 @@ class ProductListActivity : AppCompatActivity() {
     private val products = mutableListOf<Product>() // Store products for later use
     private val filteredProducts = mutableListOf<Product>() // Store filtered products
     private lateinit var categorySpinner: Spinner
+    private lateinit var sharedPreferences: SharedPreferences
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,9 @@ class ProductListActivity : AppCompatActivity() {
         val searchEditText = findViewById<EditText>(R.id.searchEditText)
         productGridView = findViewById(R.id.productGridView)
         categorySpinner = findViewById(R.id.categorySpinner)
+
+
+
 
         // Initialize adapter with empty list for now
         productAdapter = ProductAdapter(this, filteredProducts)
@@ -143,7 +148,9 @@ class ProductListActivity : AppCompatActivity() {
     }
 
     private fun addToCart(product: Product) {
-        val userId = 13 // Replace with actual user ID if available
+        sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val userID = sharedPreferences.getInt("userId", 0)
+        val userId = userID // Replace with actual user ID if available
 
         // Check if the user exists in the cart database
         ApiClient.checkUserCart(userId) { cartExists ->
