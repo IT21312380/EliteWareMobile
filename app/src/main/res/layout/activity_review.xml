@@ -13,6 +13,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/SellerReviewTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            android:text="Seller Reviews "
+            android:textSize="22sp" />
+
+        <TextView
             android:id="@+id/averageRatingTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

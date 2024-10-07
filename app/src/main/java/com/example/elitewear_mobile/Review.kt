@@ -28,15 +28,18 @@ class Review : AppCompatActivity() {
         averageRatingTextView = findViewById(R.id.averageRatingTextView)
         addReviewButton = findViewById(R.id.addReviewButton)
 
-        val vendorId = 11
+        val vendorId = intent.getIntExtra("vendorId", -1)
 
-        ApiClient2.fetchReviews(vendorId) { reviews ->
-            runOnUiThread {
-                reviewAdapter = ReviewAdapter(this, reviews)
-                reviewListView.adapter = reviewAdapter
+        if (vendorId != -1) {
+            // Fetch reviews for the given vendorId
+            ApiClient2.fetchReviews(vendorId) { reviews ->
+                runOnUiThread {
+                    reviewAdapter = ReviewAdapter(this, reviews)
+                    reviewListView.adapter = reviewAdapter
 
-                val averageRating = reviews.map { it.rate }.average()
-                averageRatingTextView.text = "Average Rating: %.2f".format(averageRating)
+                    val averageRating = reviews.map { it.rate }.average()
+                    averageRatingTextView.text = "Average Rating: %.2f".format(averageRating)
+                }
             }
         }
 
