@@ -2,6 +2,7 @@ package com.example.elitewear_mobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +21,8 @@ class ProductDetailsActivity : AppCompatActivity() {
     private lateinit var productDescriptionTextView: TextView
     private lateinit var quantityTextView: TextView
     private lateinit var vendorTextView: TextView
+    private lateinit var vendorRevBtn: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         productDescriptionTextView = findViewById(R.id.productDescriptionTextView)
         quantityTextView = findViewById(R.id.quantityTextView)
         vendorTextView = findViewById(R.id.vendorTextView)
+        vendorRevBtn = findViewById(R.id.vendorRevBtn)
 
         // Get the product ID passed from the previous activity
         val productId = intent.getIntExtra("PRODUCT_ID", -1)
@@ -61,6 +65,11 @@ class ProductDetailsActivity : AppCompatActivity() {
                 Glide.with(this)
                     .load(product.imageUrl)
                     .into(productImageView)
+            }
+            vendorRevBtn.setOnClickListener {
+                val intent = Intent(this, Review::class.java)
+                intent.putExtra("vendorId", product.vendorId) // Pass vendorId to Review activity
+                startActivity(intent)
             }
         }
         val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
