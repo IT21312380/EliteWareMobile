@@ -3,6 +3,7 @@ package com.example.elitewear_mobile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,7 +40,10 @@ class ProfileActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         userEmail = sharedPreferences.getString("userEmail", "") ?: ""
         username = sharedPreferences.getString("username","") ?:""
-
+        val userId=sharedPreferences.getInt("userId",0) ?:""
+        Log.d("LoginActivity", "User ID: $userId")
+        Log.d("LoginActivity", "User ID: $username")
+        Log.d("LoginActivity", "User ID: $userEmail")
         if (userEmail.isNotEmpty()) {
             fetchUserProfile(userEmail)
         } else {

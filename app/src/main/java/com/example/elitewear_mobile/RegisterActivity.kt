@@ -29,13 +29,14 @@ class RegisterActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
 
+            val id =0;
             val username = usernameInput.text.toString()
             val email = emailInput.text.toString()
             val password = passwordInput.text.toString()
             val state = "Pending"
             val requested = "No"
 
-            val userRegister = User(username, email, password, state, requested)
+            val userRegister = User(id,username, email, password, state, requested)
 
             authService.registerUser(userRegister).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {

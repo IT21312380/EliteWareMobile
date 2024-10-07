@@ -24,11 +24,17 @@ object UserApiClient {
 
 
     interface AuthService {
-        @POST("/api/user/register")
+        @POST("/api/user/register/")
         fun registerUser(@Body user: User): Call<Void>
 
-        @POST("/api/user/login")
-        fun loginUser(@Body user: User): Call<User>
+        @POST("/api/user/login/")
+        fun loginUser(@Body user: User): Call<LoginResponse> // Change the return type
+
+        // Define a new data class for the login response
+        data class LoginResponse(
+            val userId: Int,
+            val username: String
+        )
 
         @GET("/api/user/{email}")
         fun fetchUserProfileByEmail(@Path("email") email: String): Call<User>
