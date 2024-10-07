@@ -8,11 +8,9 @@ import androidx.databinding.DataBindingUtil
 import com.example.elitewear_mobile.databinding.ActivityLoginBinding
 import com.example.elitewear_mobile.models.User
 import com.example.elitewear_mobile.network.UserApiClient
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -25,21 +23,24 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
-            val user = User("", email, password,"","") // Username isn't needed for login
+            val user = User(0, "",email ,password, "","") // Username isn't needed for login
             loginUser(user)
         }
     }
 
     private fun loginUser(user: User) {
         val call = UserApiClient.authService.loginUser(user)
-        call.enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
+        call.enqueue(object : Callback<UserApiClient.AuthService.LoginResponse> {
+            override fun onResponse(call: Call<UserApiClient.AuthService.LoginResponse>, response: Response<UserApiClient.AuthService.LoginResponse>) {
                 if (response.isSuccessful) {
-                    val loggedInUser = response.body()
-                    loggedInUser?.let { user ->
-                        saveUserToPreferences(user) // Save user details
+                    val loginResponse = response.body()
+                    loginResponse?.let { response ->
+                        saveUserToPreferences(response) // Save user ID and username
 
-                        when (user.state) {
+                        // Optionally, you can fetch user profile using userId if needed
+
+                        // Check user state (modify according to your user model)
+                        when (response.username) {  // Use the username as a placeholder for state
                             "Pending" -> {
                                 startActivity(Intent(this@LoginActivity, PendingActivity::class.java))
                             }
@@ -57,21 +58,18 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
+            override fun onFailure(call: Call<UserApiClient.AuthService.LoginResponse>, t: Throwable) {
                 Toast.makeText(this@LoginActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
-
-
         })
-
-
     }
 
-    private fun saveUserToPreferences(user: User) {
+    private fun saveUserToPreferences(response: UserApiClient.AuthService.LoginResponse) {
         val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.putString("userEmail", user.email)
-        editor.putString("username",user.username)
-        editor.apply()}
-
+        editor.putString("userEmail", binding.emailEditText.text.toString())
+        editor.putString("username", response.username)
+        editor.putInt("userId", response.userId) // Save userId as well
+        editor.apply()
+    }
 }

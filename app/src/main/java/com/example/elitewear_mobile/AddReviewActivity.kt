@@ -1,8 +1,10 @@
 package com.example.elitewear_mobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RatingBar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +32,15 @@ class AddReviewActivity : AppCompatActivity() {
         ratingBar = findViewById(R.id.ratingBar)
         submitButton = findViewById(R.id.submitReviewButton)
 
-        val vendorId = intent.getIntExtra("vendorId", 11) // Pass vendorId to the intent
+        val vendorId = intent.getIntExtra("vendorId", 1234) // Pass vendorId to the intent
+
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val username = sharedPreferences.getString("username", "Guest")
+
+        nameEditText.setText(username)
+        nameEditText.isEnabled = false  // Disable editing
+        nameEditText.isFocusable = false // Prevent the field from being focused
+        nameEditText.isCursorVisible = false // Hide the cursor
 
         // Handle submit button click
         submitButton.setOnClickListener {
@@ -46,6 +56,34 @@ class AddReviewActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
+        val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
+        val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
+        val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
+        val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
+
+        HomeButton.setOnClickListener {
+            val intent = Intent(this, ProductListActivity::class.java)
+            startActivity(intent)
+        }
+        ReviewPageButton.setOnClickListener {
+            val intent = Intent(this, MyReviewsActivity::class.java)
+            startActivity(intent)
+        }
+        ProfilePageButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        CartPageButton.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+        NotifyPageButton.setOnClickListener {
+            val intent = Intent(this, NotificationsActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

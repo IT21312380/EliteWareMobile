@@ -1,45 +1,41 @@
 package com.example.elitewear_mobile
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.ListView
-import androidx.activity.enableEdgeToEdge
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.elitewear_mobile.Adapters.NotificationAdapter
-import com.example.elitewear_mobile.Network.ApiClient
-import com.example.elitewear_mobile.Network.NotificationClient
-import com.example.elitewear_mobile.models.Notification
+import com.example.elitewear_mobile.Adapters.ReviewAdapter
+import com.example.elitewear_mobile.Network.ApiClient2
 
-class NotificationsActivity : AppCompatActivity() {
+class MyReviewsActivity : AppCompatActivity() {
 
-
-    private lateinit var notificationListView: ListView
-    private lateinit var notificationAdapter: NotificationAdapter
-    private val notifications = mutableListOf<Notification>()
-
+    private lateinit var myReviewsListView: ListView
+    private lateinit var myReviewsAdapter: ReviewAdapter
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_notifications)
+        setContentView(R.layout.activity_my_reviews)
 
-        notificationListView = findViewById(R.id.notificationListView)
+        myReviewsListView = findViewById(R.id.myReviewsListView)
 
-        // Initialize adapter with empty list for now
-        notificationAdapter = NotificationAdapter(this,notifications)
-        notificationListView.adapter = notificationAdapter
+        sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val username = sharedPreferences.getString("username", "")
 
-        // Fetch products from the API
-        NotificationClient.fetchNotifications { fetchedNotifications ->
-            runOnUiThread {
-                notifications.clear()
-                notifications.addAll(fetchedNotifications)
-                notificationAdapter.notifyDataSetChanged()
+        if (!username.isNullOrEmpty()) {
+            ApiClient2.getReviewsForUser(username) { reviews ->
+                runOnUiThread {
+                    myReviewsAdapter = ReviewAdapter(this, reviews)
+                    myReviewsListView.adapter = myReviewsAdapter
+                }
             }
+        } else {
+            println("No user is currently logged in")
         }
+
+        // Set up navigation (similar to your previous activities)
         val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
         val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
         val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
@@ -66,6 +62,5 @@ class NotificationsActivity : AppCompatActivity() {
             val intent = Intent(this, NotificationsActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

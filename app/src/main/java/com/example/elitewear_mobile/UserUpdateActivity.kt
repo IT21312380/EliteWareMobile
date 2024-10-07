@@ -25,7 +25,7 @@ class UserUpdateActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var saveButton: Button
-    private lateinit var userId: String
+    private var userId: Int = 0
     private lateinit var currentUser: UpdateUser
     private lateinit var userEmail: String
 
@@ -44,7 +44,7 @@ class UserUpdateActivity : AppCompatActivity() {
         // Fetch user email from SharedPreferences
         val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         userEmail = sharedPreferences.getString("userEmail", "") ?: ""
-        userid = sharedPreferences.getString("userid", "") ?: ""
+        userId = (sharedPreferences.getInt("userid",0) ?: 0)
 
         // Initialize views
         usernameEditText = findViewById(R.id.usernameEditText)

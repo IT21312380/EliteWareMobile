@@ -5,45 +5,51 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Review">
+    tools:context=".EditReviewActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginBottom="50dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="15dp">
 
-        <TextView
-            android:id="@+id/SellerReviewTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:layout_gravity="center"
-            android:text="Customer Comments "
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/averageRatingTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Average Rating: "
-            android:textSize="18sp" />
-        <Button
-            android:id="@+id/addReviewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add a review"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"/>
-
-        <ListView
-            android:id="@+id/reviewListView"
+        <EditText
+            android:id="@+id/nameEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="57dp"
+            android:layout_marginTop="16dp"
+            android:hint="Your Name" />
 
+        <EditText
+            android:id="@+id/descriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:hint="Review Description" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/submitReviewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit Review"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"/>
+
+
+
+
+
+
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/navBar"
         android:layout_width="match_parent"
@@ -61,7 +67,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="7dp"
-            app:srcCompat="@drawable/baseline_homepage2" />
+            app:srcCompat="@drawable/baseline_homepage" />
 
         <ImageView
             android:id="@+id/navCartUnClick"
@@ -79,17 +85,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="7dp"
-            app:srcCompat="@drawable/baseline_books" />
-
-        <!-- New Order History Icon -->
-        <ImageView
-            android:id="@+id/navOrderHistoryUnClick"
-            android:layout_margin="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="7dp"
-            app:srcCompat="@drawable/baseline_work_history_24" />
+            app:srcCompat="@drawable/baseline_books2" />
 
         <ImageView
             android:id="@+id/navNotifyUnClick"
@@ -109,7 +105,6 @@
             android:padding="7dp"
             app:srcCompat="@drawable/baseline_facewhite" />
     </LinearLayout>
-
 
 
 </RelativeLayout>

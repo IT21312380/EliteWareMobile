@@ -1,6 +1,8 @@
 package com.example.elitewear_mobile
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +28,43 @@ class OrdersActivity : AppCompatActivity() {
 
         // Fetch the orders for a specific user
         fetchOrdersForUser(userId)
+        val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
+        val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
+        val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
+        val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
+        val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
+        val OrderHistoryButton = findViewById<ImageView>(R.id.navOrderHistoryUnClick) // New Order History Button
+
+        HomeButton.setOnClickListener {
+            val intent = Intent(this, ProductListActivity::class.java)
+            startActivity(intent)
+        }
+
+        ReviewPageButton.setOnClickListener {
+            val intent = Intent(this, MyReviewsActivity::class.java)
+            startActivity(intent)
+        }
+
+        ProfilePageButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        CartPageButton.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+
+        NotifyPageButton.setOnClickListener {
+            val intent = Intent(this, NotificationsActivity::class.java)
+            startActivity(intent)
+        }
+
+// New Order History Click Listener
+        OrderHistoryButton.setOnClickListener {
+            val intent = Intent(this, OrdersActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun fetchOrdersForUser(userId: Int) {

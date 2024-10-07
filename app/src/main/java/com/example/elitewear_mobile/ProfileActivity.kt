@@ -3,7 +3,9 @@ package com.example.elitewear_mobile
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +40,10 @@ class ProfileActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
         userEmail = sharedPreferences.getString("userEmail", "") ?: ""
         username = sharedPreferences.getString("username","") ?:""
-
+        val userId=sharedPreferences.getInt("userId",0) ?:""
+        Log.d("LoginActivity", "User ID: $userId")
+        Log.d("LoginActivity", "User ID: $username")
+        Log.d("LoginActivity", "User ID: $userEmail")
         if (userEmail.isNotEmpty()) {
             fetchUserProfile(userEmail)
         } else {
@@ -54,6 +59,32 @@ class ProfileActivity : AppCompatActivity() {
         updateButton.setOnClickListener {
             val intent = Intent(this@ProfileActivity, UserUpdateActivity::class.java)
             intent.putExtra("USER_EMAIL", userEmail) // Pass the email to the next activity
+            startActivity(intent)
+        }
+        val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
+        val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
+        val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
+        val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
+        val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
+
+        HomeButton.setOnClickListener {
+            val intent = Intent(this, ProductListActivity::class.java)
+            startActivity(intent)
+        }
+        ReviewPageButton.setOnClickListener {
+            val intent = Intent(this, MyReviewsActivity::class.java)
+            startActivity(intent)
+        }
+        ProfilePageButton.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        CartPageButton.setOnClickListener {
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
+        NotifyPageButton.setOnClickListener {
+            val intent = Intent(this, NotificationsActivity::class.java)
             startActivity(intent)
         }
 
@@ -117,6 +148,7 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
 
 
 
