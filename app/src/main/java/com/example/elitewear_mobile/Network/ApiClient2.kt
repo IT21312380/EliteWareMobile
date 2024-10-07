@@ -52,7 +52,7 @@ object ApiClient2 {
         })
     }
     fun addReview(review: Review, callback: () -> Unit) {
-        val url = "http://10.0.2.2:5133/api/review" // Replace with your backend's POST endpoint
+        val url = "http://10.0.2.2:5133/api/review"
 
         val jsonReview = JSONObject().apply {
             put("vendorID", review.vendorID)
@@ -76,6 +76,41 @@ object ApiClient2 {
             }
         })
     }
+    fun getReviewsForUser(name: String, callback: (List<Review>) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/review/user/$name"
+        val request = Request.Builder().url(url).build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                callback(emptyList()) // Call the callback with an empty list on failure
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.body?.let { responseBody ->
+                    val rawResponse = responseBody.string()
+                    println("Response from API: $rawResponse")
+                    val jsonResponse = JSONArray(rawResponse)
+                    val reviews = mutableListOf<Review>()
+
+                    for (i in 0 until jsonResponse.length()) {
+                        val jsonReview = jsonResponse.getJSONObject(i)
+                        val id = jsonReview.getInt("id")
+                        val name = jsonReview.getString("name")
+                        val vendorID = jsonReview.getInt("vendorID")
+                        val description = jsonReview.getString("description")
+                        val rate = jsonReview.getInt("rate")
+
+                        reviews.add(Review(id, vendorID, name, description, rate))
+                    }
+
+                    // Pass the reviews to the callback
+                    callback(reviews)
+                }
+            }
+        })
+    }
+
 
 
 

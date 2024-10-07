@@ -1,3 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EliteWear-Mobile</string>
+
+    <string name="select_card_type">Select Card Type</string>
+    <string-array name="card_type_array">
+        <item>Select Card Type</item>
+        <item>Visa</item>
+        <item>MasterCard</item>
+        <item>American Express</item>
+        <item>Discover</item>
+    </string-array>
 </resources>

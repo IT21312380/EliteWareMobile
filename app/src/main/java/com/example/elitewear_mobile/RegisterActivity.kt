@@ -13,6 +13,7 @@ import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
 
+
     private lateinit var authService: UserApiClient.AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +28,14 @@ class RegisterActivity : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.registerButton)
 
         registerButton.setOnClickListener {
+
             val username = usernameInput.text.toString()
             val email = emailInput.text.toString()
             val password = passwordInput.text.toString()
             val state = "Pending"
+            val requested = "No"
 
-            val userRegister = User(username, email, password, state)
+            val userRegister = User(username, email, password, state, requested)
 
             authService.registerUser(userRegister).enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {

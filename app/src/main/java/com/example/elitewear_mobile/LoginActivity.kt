@@ -13,6 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
@@ -24,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
 
-            val user = User("", email, password,"") // Username isn't needed for login
+            val user = User("", email, password,"","") // Username isn't needed for login
             loginUser(user)
         }
     }
@@ -35,19 +36,22 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
                     val loggedInUser = response.body()
-                    loggedInUser?.let { saveUserToPreferences(it) // Save user details
-                    if (it.state == "Pending"){
-                        startActivity(Intent(this@LoginActivity, PendingActivity::class.java))
-                    }
-                    if(it.state == "Deactivated"){
-                        startActivity(Intent(this@LoginActivity, DeactivateActivity::class.java))
+                    loggedInUser?.let { user ->
+                        saveUserToPreferences(user) // Save user details
 
+                        when (user.state) {
+                            "Pending" -> {
+                                startActivity(Intent(this@LoginActivity, PendingActivity::class.java))
+                            }
+                            "Deactivated" -> {
+                                startActivity(Intent(this@LoginActivity, DeactivateActivity::class.java))
+                            }
+                            else -> {
+                                Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this@LoginActivity, ProfileActivity::class.java))
+                            }
+                        }
                     }
-                    else{
-
-                    Toast.makeText(this@LoginActivity, "Login successful", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity, ProfileActivity::class.java))
-                    }}
                 } else {
                     Toast.makeText(this@LoginActivity, "Login failed", Toast.LENGTH_SHORT).show()
                 }
@@ -57,12 +61,17 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
 
-            private fun saveUserToPreferences(user: User) {
-                val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putString("userEmail", user.email)
-                editor.apply()
-            }
+
         })
+
+
     }
+
+    private fun saveUserToPreferences(user: User) {
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userEmail", user.email)
+        editor.putString("username",user.username)
+        editor.apply()}
+
 }
