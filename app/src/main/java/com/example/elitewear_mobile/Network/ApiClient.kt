@@ -10,6 +10,7 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
@@ -29,34 +30,53 @@ object ApiClient {
                 val rawResponse = response.body?.string() ?: return
                 println("Response from API: $rawResponse")
 
-                val jsonResponse = JSONObject(rawResponse) // Since we're fetching a single cart, expect an object
-                val itemsArray = jsonResponse.getJSONArray("items") // The cart items array
-                val cartItems = mutableListOf<CartItem>()
-                var totalPrice = 0.0
+                try {
+                    val jsonResponse = JSONObject(rawResponse) // Expect a single cart object
+                    if (jsonResponse.has("items")) {
+                        val itemsArray = jsonResponse.getJSONArray("items") // The cart items array
+                        val cartItems = mutableListOf<CartItem>()
+                        var totalPrice = 0.0
 
-                // Iterate through each item in the cart
-                for (j in 0 until itemsArray.length()) {
-                    val jsonItem = itemsArray.getJSONObject(j)
-                    val id = jsonItem.getInt("id")
-                    val name = jsonItem.getString("name")
-                    val price = jsonItem.getDouble("price")
-                    val quantity = jsonItem.getInt("quantity")
-                    var imageURL = jsonItem.optString("imageURL", "")
+                        if (itemsArray.length() == 0) {
+                            // No items in the cart
+                            println("No items in the cart.")
+                            callback(emptyList(), 0.0)
+                            return
+                        }
 
-                    if (imageURL.isNotEmpty()) {
-                        imageURL = imageURL.replace("localhost", "10.0.2.2")
+                        // Iterate through each item in the cart
+                        for (j in 0 until itemsArray.length()) {
+                            val jsonItem = itemsArray.getJSONObject(j)
+                            val id = jsonItem.getInt("id")
+                            val name = jsonItem.getString("name")
+                            val price = jsonItem.getDouble("price")
+                            val quantity = jsonItem.getInt("quantity")
+                            var imageURL = jsonItem.optString("imageURL", "")
+
+                            if (imageURL.isNotEmpty()) {
+                                imageURL = imageURL.replace("localhost", "10.0.2.2")
+                            }
+
+                            cartItems.add(CartItem(id, name, imageURL, price, quantity))
+                            totalPrice += price * quantity
+                        }
+
+                        // Return the fetched items and total price
+                        callback(cartItems, totalPrice)
+                    } else {
+                        // The 'items' field is missing, which means no items in the cart
+                        println("No items in the cart.")
+                        callback(emptyList(), 0.0)
                     }
-
-                    cartItems.add(CartItem(id, name, imageURL, price, quantity))
-                    totalPrice += price * quantity
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    println("Error parsing JSON response.")
+                    // In case of a parsing error, return empty cart
+                    callback(emptyList(), 0.0)
                 }
-
-                // Update the UI with the items and total price
-                callback(cartItems, totalPrice)
             }
         })
     }
-
 
 
 
@@ -363,6 +383,22 @@ object ApiClient {
             }
         })
     }
+    fun deleteCart(userId: Int, callback: (Boolean) -> Unit) {
+        val request = Request.Builder()
+            .url("http://10.0.2.2:5133/api/cart/$userId")
+            .delete()
+            .build()
 
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                callback(false)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                callback(response.isSuccessful)
+            }
+        })
+    }
 
 }
