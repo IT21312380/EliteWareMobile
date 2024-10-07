@@ -32,7 +32,15 @@ class AddReviewActivity : AppCompatActivity() {
         ratingBar = findViewById(R.id.ratingBar)
         submitButton = findViewById(R.id.submitReviewButton)
 
-        val vendorId = intent.getIntExtra("vendorId", 11) // Pass vendorId to the intent
+        val vendorId = intent.getIntExtra("vendorId", 1234) // Pass vendorId to the intent
+
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val username = sharedPreferences.getString("username", "Guest")
+
+        nameEditText.setText(username)
+        nameEditText.isEnabled = false  // Disable editing
+        nameEditText.isFocusable = false // Prevent the field from being focused
+        nameEditText.isCursorVisible = false // Hide the cursor
 
         // Handle submit button click
         submitButton.setOnClickListener {

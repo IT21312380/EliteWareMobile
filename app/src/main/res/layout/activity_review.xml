@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp">
 
         <TextView
             android:id="@+id/SellerReviewTextView"
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:layout_gravity="center"
-            android:text="Seller Reviews "
+            android:text="Customer Comments "
             android:textSize="22sp" />
 
         <TextView
@@ -42,5 +43,73 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/navy"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/navHomeUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_homepage2" />
+
+        <ImageView
+            android:id="@+id/navCartUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_cart" />
+
+        <ImageView
+            android:id="@+id/navReviewUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_books" />
+
+        <!-- New Order History Icon -->
+        <ImageView
+            android:id="@+id/navOrderHistoryUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_work_history_24" />
+
+        <ImageView
+            android:id="@+id/navNotifyUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_notifications" />
+
+        <ImageView
+            android:id="@+id/navProfileUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_facewhite" />
+    </LinearLayout>
+
+
 
 </RelativeLayout>
