@@ -63,6 +63,7 @@
                 android:backgroundTint="#FF5722"
                 android:text="Logout"
                 android:textColor="@android:color/white"
+                android:fontFamily="@font/poppins_regular"
                  />
 
             <!-- Deactivate Button -->
@@ -78,6 +79,7 @@
                 android:backgroundTint="#B71C1C"
                 android:text="Deactivate"
                 android:textColor="@android:color/white"
+                android:fontFamily="@font/poppins_regular"
                  />
                     <Button
                         android:id="@+id/MyReviewGoButton"
@@ -89,6 +91,7 @@
                         android:backgroundTint="#B71C1C"
                         android:text="My Reviews"
                         android:textColor="@android:color/white"
+                        android:fontFamily="@font/lato_regular"
                         />
 
 
@@ -103,7 +106,9 @@
                 android:backgroundTint="#B71C1C"
                 android:text="Edit"
                 android:textColor="@android:color/white"
-                app:layout_constraintTop_toBottomOf="@+id/deactivateButton" />
+                app:layout_constraintTop_toBottomOf="@+id/deactivateButton"
+
+                android:fontFamily="@font/lato_regular"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
     <LinearLayout

@@ -10,13 +10,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Notifications"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"/>
+
 
         <ListView
             android:id="@+id/notificationListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+
     <LinearLayout
         android:id="@+id/navBar"
         android:layout_width="match_parent"
