@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F4F6"> <!-- Softer background color for a professional look -->
+    android:background="#F3F4F6"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"> <!-- Softer background color for a professional look -->
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_above="@+id/checkoutButton"> <!-- Make sure content is above the button -->
+        android:padding="16dp"> <!-- Make sure content is above the button -->
 
         <!-- Cart Header -->
         <TextView
@@ -76,20 +78,78 @@
             android:background="@drawable/rounded_list_background"
             android:padding="8dp"
             android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/checkoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF9800"
+            android:drawablePadding="8dp"
+            android:elevation="3dp"
+            android:padding="10dp"
+            android:text="Make Payment"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:layout_marginBottom="35dp"/>
     </LinearLayout>
 
     <!-- Checkout Button positioned at the bottom -->
-    <Button
-        android:id="@+id/checkoutButton"
+     <!-- Align to the bottom of the parent -->
+
+    <LinearLayout
+        android:id="@+id/navBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#FF9800"
-        android:drawablePadding="8dp"
-        android:elevation="3dp"
-        android:padding="10dp"
-        android:text="Make Payment"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:layout_alignParentBottom="true" /> <!-- Align to the bottom of the parent -->
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/navy"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/navHomeUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_homepage" />
+
+        <ImageView
+            android:id="@+id/navCartUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_cart2" />
+
+        <ImageView
+            android:id="@+id/navOrderHistoryUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_work_history_24" />
+
+        <ImageView
+            android:id="@+id/navNotifyUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_notifications" />
+
+        <ImageView
+            android:id="@+id/navProfileUnClick"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="7dp"
+            app:srcCompat="@drawable/baseline_facewhite" />
+    </LinearLayout>
 
 </RelativeLayout>

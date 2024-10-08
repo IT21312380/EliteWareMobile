@@ -102,17 +102,7 @@
             android:padding="7dp"
             app:srcCompat="@drawable/baseline_cart" />
 
-        <!-- Reviews Icon -->
-        <ImageView
-            android:id="@+id/navReviewUnClick"
-            android:layout_margin="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="7dp"
-            app:srcCompat="@drawable/baseline_books" />
 
-        <!-- Order History Icon -->
         <ImageView
             android:id="@+id/navOrderHistoryUnClick"
             android:layout_margin="3dp"

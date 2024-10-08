@@ -40,7 +40,7 @@
             android:id="@+id/submitReviewButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Submit Review"
+            android:text="Update Review"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"/>
 
@@ -79,13 +79,13 @@
             app:srcCompat="@drawable/baseline_cart" />
 
         <ImageView
-            android:id="@+id/navReviewUnClick"
+            android:id="@+id/navOrderHistoryUnClick"
             android:layout_margin="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="7dp"
-            app:srcCompat="@drawable/baseline_books2" />
+            app:srcCompat="@drawable/baseline_work_history_24" />
 
         <ImageView
             android:id="@+id/navNotifyUnClick"
