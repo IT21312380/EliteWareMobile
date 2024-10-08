@@ -15,7 +15,16 @@
             android:background="@drawable/product_card_background"
             android:elevation="4dp"
             android:paddingTop="118dp">
-
+            <TextView
+                android:id="@+id/orderHistoryHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="16dp"
+                android:text="Product Details"
+                android:textColor="#FF6F00"
+                android:textSize="26sp"
+                android:textStyle="bold" />
             <!-- Product Image -->
             <ImageView
                 android:id="@+id/productImageView"
