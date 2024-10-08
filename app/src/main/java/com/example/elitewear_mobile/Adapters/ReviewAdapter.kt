@@ -27,11 +27,13 @@ class ReviewAdapter(private val context: Context, private val reviews: List<Revi
         val reviewRate = view.findViewById<TextView>(R.id.reviewRate)
         val reviewDescription = view.findViewById<TextView>(R.id.reviewDescription)
         val editReviewButton = view.findViewById<Button>(R.id.editReviewButton)
+        val vendorIntID=view.findViewById<TextView>(R.id.vendorIntID)
 
         val review = reviews[position]
         reviewName.text = review.name
         reviewRate.text = "Rating: ${review.rate}"
         reviewDescription.text = review.description
+        vendorIntID.text = "Seller ID: ${review.vendorID}"
 
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         val loggedInUsername = sharedPreferences.getString("username", null)

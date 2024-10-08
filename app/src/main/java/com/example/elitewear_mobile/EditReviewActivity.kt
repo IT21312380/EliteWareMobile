@@ -32,6 +32,10 @@ class EditReviewActivity : AppCompatActivity() {
         val reviewId = intent.getIntExtra("REVIEW_ID", -1)
         Log.d("EditReviewActivity", "Received Review ID: $reviewId")
 
+        nameEditText.isEnabled = false  // Disable editing
+        //nameEditText.isFocusable = false // Prevent the field from being focused
+        //nameEditText.isCursorVisible = false // Hide the cursor
+
         if (reviewId != -1) {
             // Fetch the review from the API
             ApiClient2.fetchSingleReview(reviewId) { fetchedReview ->
