@@ -1,6 +1,7 @@
 package com.example.elitewear_mobile
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.ListView
@@ -15,12 +16,16 @@ class OrdersActivity : AppCompatActivity() {
     private lateinit var ordersListView: ListView
     private lateinit var orderAdapter: OrderAdapter
     private val ordersList: MutableList<Order> = mutableListOf()
-    private val userId = 13  // Replace this with the specific userId you are fetching orders for
+    private lateinit var sharedPreferences: SharedPreferences
+    private var userId = 0  // Replace this with the specific userId you are fetching orders for
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_orders)
 
+        sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val userID = sharedPreferences.getInt("userId", 0)
+        userId=userID
         // Initialize ListView and Adapter
         ordersListView = findViewById(R.id.ordersListView)
         orderAdapter = OrderAdapter(this, ordersList)

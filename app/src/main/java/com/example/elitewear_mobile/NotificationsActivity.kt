@@ -2,6 +2,7 @@ package com.example.elitewear_mobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
@@ -23,7 +24,6 @@ class NotificationsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_notifications)
 
         notificationListView = findViewById(R.id.notificationListView)
@@ -32,8 +32,11 @@ class NotificationsActivity : AppCompatActivity() {
         notificationAdapter = NotificationAdapter(this,notifications)
         notificationListView.adapter = notificationAdapter
 
+        val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val userId=sharedPreferences.getInt("userId",0) ?:""
+        Log.d("LoginActivity", "User ID: $userId")
         // Fetch products from the API
-        NotificationClient.fetchNotifications { fetchedNotifications ->
+        NotificationClient.fetchNotifications(userId as Int)  { fetchedNotifications ->
             runOnUiThread {
                 notifications.clear()
                 notifications.addAll(fetchedNotifications)
