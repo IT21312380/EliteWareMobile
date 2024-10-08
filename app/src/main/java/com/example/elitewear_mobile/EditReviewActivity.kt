@@ -1,5 +1,6 @@
 package com.example.elitewear_mobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -60,6 +61,8 @@ class EditReviewActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (success) {
                         Toast.makeText(this, "Review deleted successfully", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MyReviewsActivity::class.java)
+                        startActivity(intent)
                         finish()  // Close the activity after successful deletion
                     } else {
                         Toast.makeText(this, "Failed to delete review", Toast.LENGTH_SHORT).show()
@@ -106,6 +109,8 @@ class EditReviewActivity : AppCompatActivity() {
                         Log.d("EditReviewActivity", "API response: $success")
                         if (success) {
                             Toast.makeText(this, "Review updated successfully", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, MyReviewsActivity::class.java)
+                            startActivity(intent)
                             finish()  // Close the activity after successful update
                         } else {
                             Toast.makeText(this, "Failed to update review", Toast.LENGTH_SHORT).show()

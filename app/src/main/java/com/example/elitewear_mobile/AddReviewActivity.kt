@@ -51,7 +51,9 @@ class AddReviewActivity : AppCompatActivity() {
 
             // Use ApiClient to submit the review (Create this API method in the client)
             ApiClient2.addReview(newReview) {
-                // Once the review is successfully added, you can finish the activity
+                val intent = Intent(this, com.example.elitewear_mobile.Review::class.java)
+                intent.putExtra("vendorId", vendorId)
+                startActivity(intent)
                 finish()
             }
         }
