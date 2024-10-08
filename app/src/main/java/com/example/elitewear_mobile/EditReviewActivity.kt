@@ -17,6 +17,7 @@ class EditReviewActivity : AppCompatActivity() {
     private lateinit var descriptionEditText: EditText
     private lateinit var ratingBar: RatingBar
     private lateinit var submitReviewButton: Button
+    private lateinit var deleteReviewButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class EditReviewActivity : AppCompatActivity() {
         descriptionEditText = findViewById(R.id.descriptionEditText)
         ratingBar = findViewById(R.id.ratingBar)
         submitReviewButton = findViewById(R.id.submitReviewButton)
+        deleteReviewButton = findViewById(R.id.deleteReviewButton)
 
         // Get the review ID from the intent
         val reviewId = intent.getIntExtra("REVIEW_ID", -1)
@@ -49,6 +51,24 @@ class EditReviewActivity : AppCompatActivity() {
                 }
             }
         }
+
+        deleteReviewButton.setOnClickListener {
+            Log.d("EditReviewActivity", "Delete button clicked")
+
+            // Call the API to delete the review
+            ApiClient2.deleteReview(reviewId) { success ->
+                runOnUiThread {
+                    if (success) {
+                        Toast.makeText(this, "Review deleted successfully", Toast.LENGTH_SHORT).show()
+                        finish()  // Close the activity after successful deletion
+                    } else {
+                        Toast.makeText(this, "Failed to delete review", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+
 
         submitReviewButton.setOnClickListener {
             Log.d("EditReviewActivity", "Submit button clicked")

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.RatingBar
 import android.widget.TextView
 import com.example.elitewear_mobile.EditReviewActivity
 import com.example.elitewear_mobile.R
@@ -24,14 +25,14 @@ class ReviewAdapter(private val context: Context, private val reviews: List<Revi
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.review_item, parent, false)
 
         val reviewName = view.findViewById<TextView>(R.id.reviewName)
-        val reviewRate = view.findViewById<TextView>(R.id.reviewRate)
         val reviewDescription = view.findViewById<TextView>(R.id.reviewDescription)
         val editReviewButton = view.findViewById<Button>(R.id.editReviewButton)
         val vendorIntID=view.findViewById<TextView>(R.id.vendorIntID)
+        val reviewRate = view.findViewById<RatingBar>(R.id.reviewRate)
 
         val review = reviews[position]
         reviewName.text = review.name
-        reviewRate.text = "Rating: ${review.rate}"
+        reviewRate.rating = review.rate.toFloat()
         reviewDescription.text = review.description
         vendorIntID.text = "Seller ID: ${review.vendorID}"
 

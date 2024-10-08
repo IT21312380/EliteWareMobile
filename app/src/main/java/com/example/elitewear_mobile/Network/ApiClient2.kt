@@ -192,6 +192,41 @@ object ApiClient2 {
 
 
 
+    fun deleteReview(reviewId: Int, callback: (Boolean) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/review/$reviewId"
+
+        val request = Request.Builder()
+            .url(url)
+            .delete() // Specify that this is a DELETE request
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+                Log.e("ApiClient2", "Failed to delete review: ${e.message}")
+                callback(false) // Indicate failure
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body?.string()
+                Log.d("ApiClient2", "Response code: ${response.code}")
+                Log.d("ApiClient2", "Response body: $responseBody")
+
+                if (response.isSuccessful) {
+                    Log.d("ApiClient2", "Review deleted successfully")
+                    callback(true) // Indicate success
+                } else {
+                    Log.e("ApiClient2", "Failed to delete review, response code: ${response.code}")
+                    Log.e("ApiClient2", "Server response: $responseBody")  // Log full response for debugging
+                    callback(false) // Indicate failure
+                }
+            }
+        })
+    }
+
+
+
+
 
 
 
