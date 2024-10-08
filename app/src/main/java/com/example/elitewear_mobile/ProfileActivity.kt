@@ -61,18 +61,25 @@ class ProfileActivity : AppCompatActivity() {
             intent.putExtra("USER_EMAIL", userEmail) // Pass the email to the next activity
             startActivity(intent)
         }
-        val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
+
         val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
         val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
         val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
         val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
+        val OrderHistoryButton = findViewById<ImageView>(R.id.navOrderHistoryUnClick)
+        val MyReviewGoButton = findViewById<Button>(R.id.MyReviewGoButton)
+
+        OrderHistoryButton.setOnClickListener {
+            val intent = Intent(this, OrdersActivity::class.java)
+            startActivity(intent)
+        }
+        MyReviewGoButton.setOnClickListener{
+            val intent = Intent(this, MyReviewsActivity::class.java)
+            startActivity(intent)
+        }
 
         HomeButton.setOnClickListener {
             val intent = Intent(this, ProductListActivity::class.java)
-            startActivity(intent)
-        }
-        ReviewPageButton.setOnClickListener {
-            val intent = Intent(this, MyReviewsActivity::class.java)
             startActivity(intent)
         }
         ProfilePageButton.setOnClickListener {
@@ -87,6 +94,7 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, NotificationsActivity::class.java)
             startActivity(intent)
         }
+
 
 
 

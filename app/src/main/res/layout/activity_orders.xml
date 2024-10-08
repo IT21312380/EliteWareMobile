@@ -56,14 +56,6 @@
             android:padding="7dp"
             android:src="@drawable/baseline_cart" />
 
-        <ImageView
-            android:id="@+id/navReviewUnClick"
-            android:layout_margin="3dp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="7dp"
-            android:src="@drawable/baseline_books" />
 
         <ImageView
             android:id="@+id/navOrderHistoryUnClick"

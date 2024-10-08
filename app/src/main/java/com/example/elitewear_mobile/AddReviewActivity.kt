@@ -6,10 +6,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RatingBar
-import androidx.activity.enableEdgeToEdge
+//import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+//import androidx.core.view.WindowInsetsCompat
 import com.example.elitewear_mobile.Network.ApiClient2
 import com.example.elitewear_mobile.models.Review
 
@@ -23,7 +23,6 @@ class AddReviewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_add_review)
 
         // Initialize the views
@@ -57,18 +56,20 @@ class AddReviewActivity : AppCompatActivity() {
             }
         }
 
-        val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
+
         val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
         val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
         val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
         val NotifyPageButton = findViewById<ImageView>(R.id.navNotifyUnClick)
+        val OrderHistoryButton = findViewById<ImageView>(R.id.navOrderHistoryUnClick)
+
+        OrderHistoryButton.setOnClickListener {
+            val intent = Intent(this, OrdersActivity::class.java)
+            startActivity(intent)
+        }
 
         HomeButton.setOnClickListener {
             val intent = Intent(this, ProductListActivity::class.java)
-            startActivity(intent)
-        }
-        ReviewPageButton.setOnClickListener {
-            val intent = Intent(this, MyReviewsActivity::class.java)
             startActivity(intent)
         }
         ProfilePageButton.setOnClickListener {
@@ -86,10 +87,6 @@ class AddReviewActivity : AppCompatActivity() {
 
 
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
     }
 }

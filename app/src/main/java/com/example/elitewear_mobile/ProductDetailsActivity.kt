@@ -72,7 +72,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        val ReviewPageButton = findViewById<ImageView>(R.id.navReviewUnClick)
+
         val HomeButton = findViewById<ImageView>(R.id.navHomeUnClick)
         val ProfilePageButton = findViewById<ImageView>(R.id.navProfileUnClick)
         val CartPageButton = findViewById<ImageView>(R.id.navCartUnClick)
@@ -84,10 +84,6 @@ class ProductDetailsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        ReviewPageButton.setOnClickListener {
-            val intent = Intent(this, MyReviewsActivity::class.java)
-            startActivity(intent)
-        }
 
         ProfilePageButton.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)

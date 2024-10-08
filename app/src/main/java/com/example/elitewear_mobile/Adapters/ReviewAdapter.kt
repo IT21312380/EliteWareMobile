@@ -3,6 +3,7 @@ package com.example.elitewear_mobile.Adapters
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,13 +39,14 @@ class ReviewAdapter(private val context: Context, private val reviews: List<Revi
 
         if (review.name == loggedInUsername) {
             editReviewButton.visibility = View.VISIBLE
+
         } else {
             editReviewButton.visibility = View.GONE
         }
-
         editReviewButton.setOnClickListener {
             val intent = Intent(context, EditReviewActivity::class.java)
-            intent.putExtra("reviewId", review.id)  // Assuming each review has an ID
+            intent.putExtra("REVIEW_ID", review.id)
+            Log.d("MyReviewsActivity", "Review ID passed: ${review.id}")// Pass the review ID to EditReviewActivity
             context.startActivity(intent)
         }
 

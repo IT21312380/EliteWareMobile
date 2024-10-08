@@ -61,7 +61,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="7dp"
-            app:srcCompat="@drawable/baseline_homepage2" />
+            app:srcCompat="@drawable/baseline_homepage" />
 
         <ImageView
             android:id="@+id/navCartUnClick"
@@ -72,14 +72,6 @@
             android:padding="7dp"
             app:srcCompat="@drawable/baseline_cart" />
 
-        <ImageView
-            android:id="@+id/navReviewUnClick"
-            android:layout_margin="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="7dp"
-            app:srcCompat="@drawable/baseline_books" />
 
         <!-- New Order History Icon -->
         <ImageView
