@@ -16,8 +16,8 @@ import java.io.IOException
 object NotificationClient {
     private val client = OkHttpClient()
 
-    fun fetchNotifications(callback: (List<Notification>) -> Unit) {
-        val url = "http://10.0.2.2:5133/api/Notification/csr/1"  // Updated to 10.0.2.2
+    fun fetchNotifications(userId: Int,callback: (List<Notification>) -> Unit) {
+        val url = "http://10.0.2.2:5133/api/Notification/csr/$userId"  // Updated to 10.0.2.2
 
         val request = Request.Builder().url(url).build()
 
