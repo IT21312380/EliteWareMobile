@@ -16,6 +16,7 @@
         android:theme="@style/Theme.EliteWearMobile"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".ProductDetailsActivity"
             android:exported="false" />

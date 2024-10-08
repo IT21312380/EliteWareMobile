@@ -11,45 +11,73 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="15dp">
+        android:gravity="center"
+        android:layout_above="@id/navBar">
 
-        <EditText
-            android:id="@+id/nameEditText"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:layout_marginTop="16dp"
-            android:hint="Your Name" />
-
-        <EditText
-            android:id="@+id/descriptionEditText"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="10dp"
-            android:hint="Review Description" />
-
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="1.0"
-            android:layout_marginTop="10dp" />
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            >
 
-        <Button
-            android:id="@+id/submitReviewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit Review"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"/>
+            <EditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:layout_marginTop="16dp"
+                android:hint="Your Name" />
 
+            <EditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="10dp"
+                android:hint="Review Description" />
 
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:layout_marginTop="10dp" />
 
+            <Button
+                android:id="@+id/submitReviewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Review"
+                android:backgroundTint="@color/orange"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"/>
 
+            <Button
+                android:id="@+id/deleteReviewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete Review"
+                android:backgroundTint="@color/red"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"/>
 
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+
+
+
     <LinearLayout
         android:id="@+id/navBar"
         android:layout_width="match_parent"
@@ -79,13 +107,13 @@
             app:srcCompat="@drawable/baseline_cart" />
 
         <ImageView
-            android:id="@+id/navReviewUnClick"
+            android:id="@+id/navOrderHistoryUnClick"
             android:layout_margin="3dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="7dp"
-            app:srcCompat="@drawable/baseline_books2" />
+            app:srcCompat="@drawable/baseline_work_history_24" />
 
         <ImageView
             android:id="@+id/navNotifyUnClick"
