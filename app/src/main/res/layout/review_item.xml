@@ -5,12 +5,42 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/reviewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviewer Name:"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" /> <!-- This will push the button to the right -->
+
+        <Button
+            android:id="@+id/editReviewButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Rating"
+            android:backgroundTint="#B71C1C"
+            android:layout_marginTop="8dp"
+            android:visibility="visible"/>
+
+
+    </LinearLayout>
+
+
     <TextView
-        android:id="@+id/reviewName"
+        android:id="@+id/vendorIntID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reviewer Name:"
-        android:textSize="18sp"
+        android:text="Seller:"
+        android:textSize="16sp"
         android:layout_marginTop="8dp" />
     <TextView
         android:id="@+id/reviewRate"
@@ -26,13 +56,7 @@
         android:text="Description:"
         android:textSize="16sp"
         android:layout_marginTop="8dp" />
-    <Button
-        android:id="@+id/editReviewButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:layout_marginTop="8dp"
-        android:visibility="visible"/>
+
 
 
 
