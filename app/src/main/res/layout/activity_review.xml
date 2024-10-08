@@ -13,14 +13,24 @@
         android:orientation="vertical"
         android:layout_marginBottom="50dp">
 
+
         <TextView
             android:id="@+id/SellerReviewTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:layout_gravity="center"
-            android:text="Customer Comments "
-            android:textSize="22sp" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/rounded_orange_background"
+            android:elevation="6dp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="Customer Reviews"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_regular"/>
 
         <TextView
             android:id="@+id/averageRatingTextView"
