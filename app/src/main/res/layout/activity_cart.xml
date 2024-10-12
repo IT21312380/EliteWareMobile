@@ -47,12 +47,12 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF9800"
                 android:drawableLeft="@drawable/baseline_arrow_back_24"
+                android:drawablePadding="8dp"
+                android:elevation="3dp"
                 android:padding="10dp"
                 android:text="Continue Shopping"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:drawablePadding="8dp"
-                android:elevation="3dp" />
+                android:textSize="16sp" />
 
             <!-- Total Price -->
             <TextView
@@ -91,7 +91,8 @@
             android:text="Make Payment"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:layout_marginBottom="35dp"/>
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 
     <!-- Checkout Button positioned at the bottom -->
